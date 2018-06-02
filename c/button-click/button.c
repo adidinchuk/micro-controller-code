@@ -2,7 +2,7 @@
  * button.c:
  * listen on a pin for a rising edge, increment a counter and push the 
  * counter's value through a shift register connected to a 7 segment
- *
+ * Author: Andrew Didinchuk <adidinchuk@gmail.com>
  ***********************************************************************
  * This file is part of wiringPi:
  *	https://projects.drogon.net/raspberry-pi/wiringpi/
