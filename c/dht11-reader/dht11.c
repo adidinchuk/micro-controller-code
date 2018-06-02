@@ -81,7 +81,7 @@ void read_dht11_dat()
 			// left shift bit and update padded 0 with a 1 if signal > 50um
 			dht11_dat[j / 8] <<= 1;
 			if ( counter > 50 )
-				dht11_dat[j / 8] |= 1;
+				dht11_dat[j / 8] = 1;
 			j++;
 		}
 	}
