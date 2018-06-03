@@ -3,7 +3,7 @@
 void pulse (int pin, double t);
 
 // shift register data signal
-int SHIFT = ;
+int SHIFT = 7;
 
 // sleep timing
 int ONE = 1
