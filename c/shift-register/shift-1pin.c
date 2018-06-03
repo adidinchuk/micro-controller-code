@@ -11,7 +11,19 @@ int ONE = 1;
 int ZERO = 15;
 int PAUSE = 50;
 
-
+// 7 segment display encoding 0-9
+int digits[10][7] = {
+    {1, 1, 1, 1, 1, 1, 0},
+    {0, 1, 1, 0, 0, 0, 0},
+    {1, 1, 0, 1, 1, 0, 1},
+    {1, 1, 1, 1, 0, 0, 1},
+    {0, 1, 1, 0, 0, 1, 1},
+    {1, 0, 1, 1, 0, 1, 1},
+    {1, 0, 1, 1, 1, 1, 1},
+    {1, 1, 1, 0, 0, 0, 0},
+    {1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 0, 1, 1}
+  };
 
 //testing output
 int main (void){
@@ -22,11 +34,18 @@ int main (void){
   //digitalWrite (SHIFT, LOW);  
   //delay (ZERO);
   //digitalWrite(SHIFT, HIGH);
-  for (;;)  {
-  //for (int x = 0; x < 8; x++){
-    pulse_low(SHIFT, ONE);
-    delayMicroseconds (PAUSE) ;
-    pulse_low(SHIFT, ZERO);
+  
+  for (;;)  {  
+    for (int i = 0; i < sizeof(digits)/sizeof(digits[0]); i++){
+      for (int x = 0; x < sizeof(digits[i])/sizeof(digits[i][0]); x++){
+        if ( digits[i][x] == 1 )
+          pulse_low(SHIFT, ONE);
+        else 
+          pulse_low(SHIFT, ZERO);
+        delayMicroseconds (PAUSE) ;      
+      }
+      delay(500);      
+    }
   }
 
 }
