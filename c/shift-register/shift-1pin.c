@@ -16,9 +16,9 @@ int main (void){
   pinMode (SHIFT, OUTPUT) ;
   digitalWrite (SHIFT, HIGH) ;
   for (;;)  {
-    pulse_low(SHIFT, ONE)
+    pulse_low(SHIFT, ONE);
     delayMicroseconds (PAUSE) ;
-    pulse_low(SHIFT, ZERO)
+    pulse_low(SHIFT, ZERO);
   }
 }
 
