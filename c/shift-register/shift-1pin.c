@@ -38,8 +38,10 @@ int main (void){
   for (;;)  {  
     for (int i = 0; i < sizeof(digits)/sizeof(digits[0]); i++){
       for (int x = 0; x < sizeof(digits[i])/sizeof(digits[i][0]); x++){
+        print(i);
         if ( digits[i][x] == 1 )
           pulse_low(SHIFT, ONE);
+          print("ONE")
         else 
           pulse_low(SHIFT, ZERO);
         delayMicroseconds (PAUSE) ;      
