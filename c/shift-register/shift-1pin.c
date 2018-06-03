@@ -6,9 +6,9 @@ void pulse (int pin, double t);
 int SHIFT = 7;
 
 // sleep timing
-int ONE = 1
-int ZERO = 15
-int PAUSE = 50
+int ONE = 1;
+int ZERO = 15;
+int PAUSE = 50;
 
 //testing output
 int main (void){
