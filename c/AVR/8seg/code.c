@@ -38,7 +38,7 @@ int main(void) {
                                    set first 3 pins as out. */
   int twos = 0b00000000;        /* 2s complement holder */
 
-  for (1)  {
+  while (1)  {
    pulse(CLK, PAUSE) ;
    int i, x;
    for (i = 0; i < sizeof(digits)/sizeof(digits[0]); i++)   {
