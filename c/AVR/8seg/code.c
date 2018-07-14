@@ -15,6 +15,7 @@ int CLK = 0b00000010;
 int SHCP = 0b00000100;
 
 int PAUSE = 50;
+int old_state = 0b00000000;
 
 
 // 7 segment display encoding 0-9
@@ -62,7 +63,7 @@ int main(void) {
 // pin - GPIO pin to pulse
 // t - pulse delay between high and low
 void pulse(int pin, double t){
-  int old_state = PORTB;
+  old_state = PORTB;
   PORTB = PORTB | pin;          
   _delay_ms(t);
   PORTB = old_state;
