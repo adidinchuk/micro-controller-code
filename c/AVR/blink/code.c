@@ -1,4 +1,4 @@
-                                                      /* Blinker Demo */
+                                                 /* Blinker Demo */
 
 // ------- Preamble -------- //
 #define F_CPU 1000000L                      /* atTiny85 Bautrate */
