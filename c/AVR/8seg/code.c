@@ -37,11 +37,11 @@ int main(void) {
   DDRB |= 0b00000111;            /* Data Direction Register B:
                                    set first 3 pins as out. */
 
-  for (;;)  {
+  for (1)  {
    pulse(CLK, PAUSE) ;
    for (int i = 0; i < sizeof(digits)/sizeof(digits[0]); i++)   {
      for (int x = 0; x < sizeof(digits[i])/sizeof(digits[i][0]); x++)     {
-       if (data[i][x]){
+       if (digits[i][x]){
            PORTB = PORTB | DS;
        }else{
             twos = ~DS;
