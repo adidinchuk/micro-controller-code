@@ -5,7 +5,7 @@
 #include <avr/io.h>                        /* Defines pins, ports, etc */
 #include <util/delay.h>                     /* Functions to waste time */
 
-void pulse (int pin, int t);
+void pulse (int pin, uint16_t t);
 
 // shift register data signal
 int DS = 0b00000001;
@@ -14,7 +14,7 @@ int CLK = 0b00000010;
 // data out signal for the shift register
 int SHCP = 0b00000100;
 
-int PAUSE = 50;
+uint16_t PAUSE = 50;
 int old_state = 0b00000000;
 
 
@@ -62,7 +62,7 @@ int main(void) {
 // pulse function to pulse a pin
 // pin - GPIO pin to pulse
 // t - pulse delay between high and low
-void pulse(int pin, int t){
+void pulse(int pin, uint16_t t){
   old_state = PORTB;
   PORTB = PORTB | pin;          
   _delay_ms(t);
