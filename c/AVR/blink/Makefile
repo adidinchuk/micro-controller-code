@@ -4,7 +4,7 @@ CC=/usr/bin/avr-gcc
 CFLAGS=-g -Os -Wall -mcall-prologues -mmcu=$(MULTIPOINT_CONTROL_UNIT)
 OBJ2HEX=/usr/bin/avr-objcopy
 AVRDUDE=/usr/local/bin/avrdude
-TARGET=blinky
+TARGET=code
 
 all :
 	$(CC) $(CFLAGS) $(TARGET).c -o $(TARGET)
