@@ -14,7 +14,7 @@ int CLK = 0b00000010;
 // data out signal for the shift register
 int SHCP = 0b00000100;
 
-int PAUSE = 50
+int PAUSE = 50;
 
 
 // 7 segment display encoding 0-9
@@ -44,8 +44,8 @@ int main(void) {
        if (data[i][x]){
            PORTB = PORTB | DS;
        }else{
-            twos = ~DS
-            PORTB = & twos
+            twos = ~DS;
+            PORTB = & twos;
        }         
        pulse(CLK, PAUSE);
      }
