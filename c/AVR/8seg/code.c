@@ -58,12 +58,9 @@ int main(void) {
         }
         my_delay_ms(PAUSE);
         pulse(SHCP, PAUSE);
+        while (! (PORTB & BTN)){}
     }
-    while (1){
-        if(PORTB & BTN){
-            break;
-        }
-    }
+        
   }    
   return 0;                            /* This line is never reached */
 }
