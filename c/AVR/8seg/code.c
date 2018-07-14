@@ -53,8 +53,7 @@ int main(void) {
         }else{
                 twos = ~DS;
                 PORTB = PORTB & twos;
-        }         
-        print(PORTB)
+        }                 
         pulse(CLK, PAUSE);
         }
         my_delay_ms(PAUSE);
