@@ -14,7 +14,7 @@ int CLK = 0b00000010;
 // data out signal for the shift register
 int SHCP = 0b00000100;
 
-int PAUSE = 50;
+uint16_t PAUSE = 50;
 int old_state = 0b00000000;
 
 
