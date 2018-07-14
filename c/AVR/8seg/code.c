@@ -40,17 +40,18 @@ int main(void) {
 
   for (1)  {
    pulse(CLK, PAUSE) ;
-   for (int i = 0; i < sizeof(digits)/sizeof(digits[0]); i++)   {
-     for (int x = 0; x < sizeof(digits[i])/sizeof(digits[i][0]); x++)     {
+   int i, x;
+   for (i = 0; i < sizeof(digits)/sizeof(digits[0]); i++)   {
+     for (x = 0; x < sizeof(digits[i])/sizeof(digits[i][0]); x++)     {
        if (digits[i][x]){
            PORTB = PORTB | DS;
        }else{
             twos = ~DS;
-            PORTB = & twos;
+            PORTB = PORTB & twos;
        }         
        pulse(CLK, PAUSE);
      }
-     delay(PAUSE);
+     _delay_ms(PAUSE);
      pulse(SHCP, PAUSE);
    }
   }    
@@ -61,7 +62,7 @@ int main(void) {
 // pin - GPIO pin to pulse
 // t - pulse delay between high and low
 void pulse(int pin, double t){
-  old_state = PORTB;
+  int old_state = PORTB;
   PORTB = PORTB | pin;          
   _delay_ms(t);
   PORTB = old_state;
