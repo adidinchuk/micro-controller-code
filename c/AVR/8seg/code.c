@@ -14,6 +14,9 @@ int DS = 0b00000001;
 int CLK = 0b00000010;
 // data out signal for the shift register
 int SHCP = 0b00000100;
+//button number
+int BTN = 0b00001000;
+
 
 int PAUSE = 50;
 int old_state = 0b00000000;
@@ -41,21 +44,27 @@ int main(void) {
   int twos = 0b00000000;        /* 2s complement holder */
 
   while (1)  {
-   pulse(CLK, PAUSE) ;
-   int i, x;
-   for (i = 0; i < sizeof(digits)/sizeof(digits[0]); i++)   {
-     for (x = 0; x < sizeof(digits[i])/sizeof(digits[i][0]); x++)     {
-       if (digits[i][x]){
-           PORTB = PORTB | DS;
-       }else{
-            twos = ~DS;
-            PORTB = PORTB & twos;
-       }         
-       pulse(CLK, PAUSE);
-     }
-     my_delay_ms(PAUSE);
-     pulse(SHCP, PAUSE);
-   }
+    pulse(CLK, PAUSE) ;
+    int i, x;
+    for (i = 0; i < sizeof(digits)/sizeof(digits[0]); i++)   {
+        for (x = 0; x < sizeof(digits[i])/sizeof(digits[i][0]); x++)     {
+        if (digits[i][x]){
+            PORTB = PORTB | DS;
+        }else{
+                twos = ~DS;
+                PORTB = PORTB & twos;
+        }         
+        print(PORTB)
+        pulse(CLK, PAUSE);
+        }
+        my_delay_ms(PAUSE);
+        pulse(SHCP, PAUSE);
+    }
+    while (1){
+        if(PORTB & BTN){
+            break;
+        }
+    }
   }    
   return 0;                            /* This line is never reached */
 }
