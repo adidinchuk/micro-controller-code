@@ -58,7 +58,7 @@ int main(void) {
         }
         my_delay_ms(PAUSE);
         pulse(SHCP, PAUSE);
-        while ((PORTB & BTN) == 0x00){}
+        while ((PINB & BTN) == 0x00){}
     }
         
   }    
