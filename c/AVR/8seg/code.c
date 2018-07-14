@@ -5,7 +5,7 @@
 #include <avr/io.h>                        /* Defines pins, ports, etc */
 #include <util/delay.h>                     /* Functions to waste time */
 
-void pulse (int pin, double t);
+void pulse (int pin, int t);
 
 // shift register data signal
 int DS = 0b00000001;
