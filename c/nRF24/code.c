@@ -1,7 +1,7 @@
-#include <stdlib.h>
-#include <iostream.h>
-#include <sstream.h>
-#include <string.h>
+#include <cstdlib>
+#include <iostream>
+#include <sstream>
+#include <string>
 #include <unistd.h>
 #include <RF24/RF24.h>
 
