@@ -23,7 +23,7 @@ dht11_data_pin = 18
 GPIO.setup(dht11_data_pin, GPIO.OUT)
 GPIO.output(dht11_data_pin, GPIO.HIGH)
 
-radio.begin(0, transmit_pin) #Set spi-ce pin10, and rf24-CE pin 8
+radio.begin(0, transmit_pin) #Set pins CE - GPIO22, CSN GPIO8/SPICSO
 time.sleep(1)
 radio.setRetries(15,15)
 radio.setPayloadSize(32)
