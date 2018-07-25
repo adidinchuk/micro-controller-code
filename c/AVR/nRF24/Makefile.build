@@ -21,7 +21,7 @@ endif
 all: $(PROGRAMS)
 
 $(PROGRAMS): $(SOURCES)
-	$(CC) $(CFLAGS) -I$(HEADER_DIR)/.. -I.. -L$(LIB_DIR) $@.cpp $(LIBS) -o $@
+	$(CC) $(CFLAGS) -I$(HEADER_DIR) -I.. -L$(LIB_DIR) $@.cpp $(LIBS) -o $@
 	$(OBJ2HEX) -R .eeprom -O ihex $(TARGET) $(TARGET).hex
 	rm -f $(TARGET)
 
