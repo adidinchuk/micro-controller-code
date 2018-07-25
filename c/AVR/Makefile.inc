@@ -3,7 +3,7 @@ OS=AUDRINO
 DRIVER=AUDRINO
 #CPUFLAGS=-march=armv6zk -mtune=arm1176jzf-s -mfpu=vfp -mfloat-abi=hard
 MULTIPOINT_CONTROL_UNIT=attiny85
-CFLAGS=-mfpu=vfp -Os -Wall -mcall-prologues -mmcu=$(MULTIPOINT_CONTROL_UNIT)
+CFLAGS=-Os -Wall -mcall-prologues -mmcu=$(MULTIPOINT_CONTROL_UNIT)
 PREFIX=/usr/local
 REMOTE_PREFIX=/usr/local
 LIB=rf24
