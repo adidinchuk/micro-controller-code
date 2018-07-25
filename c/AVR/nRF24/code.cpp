@@ -49,6 +49,7 @@ version 2 as published by the Free Software Foundation.
 //Use RF24.h -- source https://github.com/edoardoo/RF24/blob/master/examples/rf24_ATTiny/rf24ping85/rf24ping85.ino
 
 // CE and CSN are configurable, specified values for ATtiny85 as connected above
+#define uint8_t byte
 #define CE_PIN 3
 #define CSN_PIN 4
 //#define CSN_PIN 3 // uncomment for ATtiny85 3 pins solution
@@ -60,6 +61,9 @@ RF24 radio(CE_PIN, CSN_PIN);
 byte addresses[][6] = {
   "1Node","2Node"};
 unsigned long payload = 0;
+
+void setup ();
+void loop(void);
 
 void setup() {
   // Setup and configure rf radio
@@ -78,11 +82,11 @@ void loop(void){
   radio.write( &payload, sizeof(unsigned long) );
   radio.startListening(); // Now, continue listening
 
-    unsigned long started_waiting_at = micros(); // Set up a timeout period, get the current microseconds
-  boolean timeout = false; // Set up a variable to indicate if a response was received or not
+    unsigned long started_waiting_at = millis(); // Set up a timeout period, get the current microseconds
+  bool timeout = false; // Set up a variable to indicate if a response was received or not
 
   while ( !radio.available() ){ // While nothing is received
-    if (micros() - started_waiting_at > 200000 ){ // If waited longer than 200ms, indicate timeout and exit while loop
+    if (millis() - started_waiting_at > 200000 ){ // If waited longer than 200ms, indicate timeout and exit while loop
       timeout = true;
       break;
     }
@@ -96,4 +100,10 @@ void loop(void){
 
   // Try again 1s later
   delay(1000);
+}
+
+int main(void){
+   setup();
+   loop();
+   return 0;
 }
