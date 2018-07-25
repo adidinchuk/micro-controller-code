@@ -1,6 +1,6 @@
 #############################################################################
 #
-# Makefile for librf24 examples on Raspberry Pi
+# Makefile for librf24 examples on Linux
 #
 # License: GPL (General Public License)
 # Author:  gnulnulf <arco@appeltaart.mine.nu>
@@ -9,32 +9,15 @@
 # Description:
 # ------------
 # use make all and make install to install the examples
-# You can change the install directory by editing the prefix line
 #
-prefix := /usr/local
 
-# The recommended compiler flags for the Raspberry Pi
-CCFLAGS=-Ofast -mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s
-#CCFLAGS=
+ifeq ($(wildcard ../Makefile.inc), )
+        $(error Configuration not found. Run ./configure first)
+endif
+
+include ../Makefile.inc
 
 # define all programs
-#PROGRAMS = scanner pingtest gettingstarted
-PROGRAMS = code2
-SOURCES = ${PROGRAMS:=.cpp}
+PROGRAMS = code
 
-all: ${PROGRAMS}
-
-${PROGRAMS}: ${SOURCES}
-	g++ ${CCFLAGS} -Wall $@.cpp -o $@ -I/home/pi/dev/bin/RF24 -lrf24-bcm
-
-clean:
-	rm -rf $(PROGRAMS)
-
-install: all
-	test -d $(prefix) || mkdir $(prefix)
-	test -d $(prefix)/bin || mkdir $(prefix)/bin
-	for prog in $(PROGRAMS); do \
-	  install -m 0755 $$prog $(prefix)/bin; \
-	done
-
-.PHONY: install
+include Makefile.build
