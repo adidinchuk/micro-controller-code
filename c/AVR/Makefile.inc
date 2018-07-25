@@ -24,3 +24,8 @@ LDCONFIG=ldconfig
 REMOTE_LDCONFIG=/sbin/ldconfig
 EXAMPLES_DIR=/usr/local/bin
 REMOTE_EXAMPLES_DIR=/usr/local/bin
+######### AVR
+AVRDUDEMCU=t85
+CC=/usr/bin/avr-gcc
+OBJ2HEX=/usr/bin/avr-objcopy
+AVRDUDE=/usr/local/bin/avrdude
