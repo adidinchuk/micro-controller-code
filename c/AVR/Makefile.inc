@@ -1,6 +1,6 @@
-OS=AUDRINO
-#SOC=BCM2835
-DRIVER=AUDRINO
+OS=LINUX
+SOC=SPI
+DRIVER=wiringPi
 #CPUFLAGS=-march=armv6zk -mtune=arm1176jzf-s -mfpu=vfp -mfloat-abi=hard
 MULTIPOINT_CONTROL_UNIT=attiny85
 CFLAGS=-Os -Wall -mcall-prologues -mmcu=$(MULTIPOINT_CONTROL_UNIT)
@@ -18,7 +18,7 @@ AVR_LIB=/usr/include/avr/avr-libc-1.8.1/include/
 REMOTE_LIB_DIR=/usr/local/lib
 HEADER_DIR=/usr/local/include/RF24
 REMOTE_HEADER_DIR=/usr/local/include/RF24
-DRIVER_DIR=utility/RPi
+DRIVER_DIR=utility/ATTiny
 ARCH_DIR=utility
 SHARED_LINKER_FLAGS= -pthread -shared -Wl,-soname,librf24.so.1
 LDCONFIG=ldconfig
