@@ -29,7 +29,7 @@ int main(void){
 
   //pin 4 read, pin 3 write
   DDRB &= ~(1<<DDB4);
-  DDRB |= (1<<DDB3)//|(1<<0b00000001));
+  DDRB |= (1<<DDB3);//|(1<<0b00000001));
   //PORTB &= ~(1<<0b00000001);/////
   //set voltage to internal, right and Right adjust
   ADMUX &= ~((1<<REFS1)|(1<<REFS0)|(1<<ADLAR));
