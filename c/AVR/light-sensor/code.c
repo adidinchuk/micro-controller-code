@@ -38,9 +38,11 @@ int main(void){
   //Digital input disable (not required)
   DIDR0 |= (1<<ADC2D);
 
+  ADCSRA |= (1 << ADPS1) | (1 << ADPS0);//
+
   //enable ADC
   ADCSRA |= ((1<<ADEN)|(1<<ADATE));
-
+  
   //convert
   ADCSRA |= (1<<ADSC);
 
