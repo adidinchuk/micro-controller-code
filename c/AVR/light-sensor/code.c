@@ -21,7 +21,7 @@ External Reference	0	Connect Voltage Reference
 
 volatile int analogResult = 0;
 
-ISR(ADC_val){
+ISR(ADC_vect){
   // ADCH last 2 bits of result in HIGH register shift to combine into 10 bit result
   analogResult = (ADCH<<8)|ADCL;
 }
