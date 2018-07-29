@@ -32,11 +32,11 @@ int main(void){
   //ADCSRB &=~((1<<ADTS2)|(1<<ADTS1)|(1<<ADTS0));
 
   //Digital input disable (not mandatory, reduces power consumption)
-  DIDR0 |= (1<<ADC2D);
+  //DIDR0 |= (1<<ADC2D);
 
   //enable ADC (ADEN) and enables ADC interrupt (ADIE)
   //Set ADATE to ensure interrupt can trigger at any time
-  ADCSRA |= (1 << ADPS1) | (1 << ADPS0);
+  ADCSRA |= ((1 << ADPS1) | (1 << ADPS0));
   ADCSRA |= (1<<ADEN);
 
   //convert analog to digital
@@ -44,7 +44,7 @@ int main(void){
 
   while(1){
     PORTB |= (1<<PB2);
-    _delay_ms(1000);
+    //_delay_ms(1000);
     ADCSRA |= (1<<ADSC);
     //loop_until_bit_is_clear(ADCSRA, ADSC);    
     while((ADCSRA & (1<<ADSC)));
@@ -58,7 +58,7 @@ int main(void){
     }else{
       PORTB &= ~(1<<PB3);
     }
-    _delay_ms(1000);
+    //_delay_ms(1000);
   }
   return 0;
 }
