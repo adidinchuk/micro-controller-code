@@ -20,12 +20,17 @@ External Reference	0	Connect Voltage Reference
 
 volatile int analogResult = 0;
 
+ISR(ADC_val){
+  // ADCH last 2 bits of result in HIGH register shift to combine into 10 bit result
+  analogResult = (ADCH<<8)|ADCL;
+}
+
 int main(void){
 
   //pin 4 read, pin 3 write
   DDRB &= ~(1<<DDB4);
-  DDRB |= ((1<<DDB3)|(1<<0b00000001));
-  PORTB &= ~(1<<0b00000001);/////
+  DDRB |= (1<<DDB3)//|(1<<0b00000001));
+  //PORTB &= ~(1<<0b00000001);/////
   //set voltage to internal, right and Right adjust
   ADMUX &= ~((1<<REFS1)|(1<<REFS0)|(1<<ADLAR));
   
@@ -38,23 +43,23 @@ int main(void){
   //Digital input disable (not required)
   DIDR0 |= (1<<ADC2D);
 
-  ADCSRA |= (1 << ADPS1) | (1 << ADPS0);//
+  //ADCSRA |= (1 << ADPS1) | (1 << ADPS0);//
 
   //enable ADC
-  ADCSRA |= ((1<<ADEN)|(1<<ADATE));
-  
+  ADCSRA |= ((1<<ADEN)|(1<<ADIE)|(1<<ADATE));
+  sei();
   //convert
   ADCSRA |= (1<<ADSC);
 
   while(1){
-    PORTB |= (1<<0b00000001);/////
+    //PORTB |= (1<<0b00000001);/////
     //while ((ADCSRA & (1<<ADSC))); //wait for conversion to finish
-    _delay_ms(1000);/////
-    PORTB &= ~(1<<0b00000001);/////
+    //_delay_ms(1000);/////
+    //PORTB &= ~(1<<0b00000001);/////
     
     // ADCH last 2 bits of result in HIGH register shift to combine into 10 bit result
-    analogResult = (ADCH<<8)|ADCL;
-    PORTB |= (1<<PB0);
+    //analogResult = (ADCH<<8)|ADCL;
+    //PORTB |= (1<<PB0);
     
     if(analogResult>250){
       PORTB |= (1<<PB3);
