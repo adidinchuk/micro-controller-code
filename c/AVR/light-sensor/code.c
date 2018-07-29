@@ -24,9 +24,9 @@ static inline void initADC0(void){
 }
 int main(void){
 
-  uint8_t ledValue;
+  //uint8_t ledValue;
   uint16_t adcValue;
-  uint8_t i;
+  //uint8_t i;
 
   DDRB |= 0b0001000;
 
