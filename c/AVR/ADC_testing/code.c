@@ -39,17 +39,18 @@ int main(void){
   ADCSRA |= (1<<ADEN);
 
   //convert analog to digital
-  ADCSRA |= (1<<ADSC);
+  //ADCSRA |= (1<<ADSC);
 
   while(1){
     PORTB |= (1<<PB2);
     _delay_ms(1000);
     ADCSRA |= (1<<ADSC);
-    loop_until_bit_is_clear(ADCSRA, ADSC);
-    //while((ADCSRA & (1<<ADSC)));
+    //loop_until_bit_is_clear(ADCSRA, ADSC);
+    analogResult = (ADCH<<8)|ADCL;
+    while((ADCSRA & (1<<ADSC)));
     PORTB &= ~(1<<PB2);
     
-    analogResult = (ADCH<<8)|ADCL;
+    
     //enable Pin 3 output if value is over threashold
     if(analogResult>THRESHOLD){
       PORTB |= (1<<PB3);
