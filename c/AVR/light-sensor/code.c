@@ -30,9 +30,9 @@ int main(void){
 
   DDRB |= 0b000001;
 
-  PORTB = 0b00000001;
+  PORTB |= 0b00000001;
   _delay_ms(5000);
-  PORTB = 0b00000000;
+  PORTB |= 0b00000000;
 
   initADC0();
   DDRB = 0xff;
@@ -43,7 +43,7 @@ int main(void){
     loop_until_bit_is_clear(ADCSRA, ADSC);
     // read ADC
     adcValue = ADC;
-    if(adcValue > 50){
+    if(adcValue > 250){
       PORTB = 0b00000001;
     }else{
       PORTB = 0b00000000;
