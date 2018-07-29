@@ -28,9 +28,9 @@ int main(void){
   uint16_t adcValue;
   //uint8_t i;
 
-  DDRB |= 0b0001000;
+  DDRB |= 0b000001;
 
-  PORTB = 0b00010000;
+  PORTB = 0b00000001;
   _delay_ms(5000);
   PORTB = 0b00000000;
 
@@ -44,7 +44,7 @@ int main(void){
     // read ADC
     adcValue = ADC;
     if(adcValue > 50){
-      PORTB = 0b00010000;
+      PORTB = 0b00000001;
     }else{
       PORTB = 0b00000000;
     }
