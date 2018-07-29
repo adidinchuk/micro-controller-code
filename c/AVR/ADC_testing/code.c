@@ -28,38 +28,24 @@ int main(void){
   //set input as ADC2 (PIN 4)
   ADMUX |= (1<<MUX1);
 
-  //set free running mode (dont need ADCSRA |= (1<<ADSC); every read)
-  //ADCSRB &=~((1<<ADTS2)|(1<<ADTS1)|(1<<ADTS0));
-
-  //Digital input disable (not mandatory, reduces power consumption)
-  //DIDR0 |= (1<<ADC2D);
-
   //enable ADC (ADEN) and enables ADC interrupt (ADIE)
   //Set ADATE to ensure interrupt can trigger at any time
   ADCSRA |= ((1 << ADPS1) | (1 << ADPS0));
   ADCSRA |= (1<<ADEN);
 
-  //convert analog to digital
-  //ADCSRA |= (1<<ADSC);
+  while(1){
+    //convert analog to digital
+    ADCSRA |= (1<<ADSC);    
+    while((ADCSRA & (1<<ADSC))); //wait for computation to complete 
 
-  while(1){    
-    PORTB |= (1<<PB2);
-    ADCSRA &= ~(1<<ADSC);
-    _delay_ms(1000);
-    ADCSRA |= (1<<ADSC);
-    //loop_until_bit_is_clear(ADCSRA, ADSC);    
-    while((ADCSRA & (1<<ADSC)));
     analogResult = (ADCH<<8)|ADCL;
-    PORTB &= ~(1<<PB2);
-    
-    
+
     //enable Pin 3 output if value is over threashold
     if(analogResult>THRESHOLD){
       PORTB |= (1<<PB3);
     }else{
       PORTB &= ~(1<<PB3);
-    }
-    //_delay_ms(1000);
+    }    
   }
   return 0;
 }
