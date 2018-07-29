@@ -18,6 +18,6 @@ endif
 include ../Makefile.inc
 
 # define all programs
-PROGRAMS = code
+PROGRAMS = rf24
 
 include Makefile.build
