@@ -35,10 +35,12 @@ int main(void){
 
   while(1){
     //convert analog to digital
-    ADCSRA |=(1<<ADIF);
-    ADCSRA |= (1<<ADSC);
+    ADMUX &= 0xf0;
+    ADMUX |= (1<<MUX1);
+    ADCSRA |= ( 1 << ADSC );
+    while( ADCSRA & ( 1 << ADIF ) );
     //loop_until_bit_is_clear(ADCSRA, (1<<ADIF));
-    while(!(ADCSRA&(1<<ADIF))); //wait for computation to complete 
+    //while(!(ADCSRA&(1<<ADIF))); //wait for computation to complete 
     
     analogResult = ((ADCH<<8)|ADCL);
 
@@ -48,6 +50,7 @@ int main(void){
     }else{
       PORTB &= ~(1<<PB3);
     }    
+    ADCSRA |= ( 1 << ADIF );
   }
   return 0;
 }
