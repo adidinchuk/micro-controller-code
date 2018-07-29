@@ -14,8 +14,9 @@ External Reference	0	Connect Voltage Reference
 // ADMUX - This register is used to select reference voltage source, how the result should be stored (either left adjusted or right adjusted), analog port channel to be used for conversion.
 //ADCSRA - This register is responsible for enabling ADC, start ADC converting, prescaler selection and interrupt control.
 
+#define THRESHOLD 800//Threashold (out of 1023)
+
 volatile int analogResult = 0;
-#define int THRESH 800;             //Threashold (out of 1023)
 
 /* Interrupt method */
 ISR(ADC_vect){
@@ -49,7 +50,7 @@ int main(void){
 
   while(1){
     //enable Pin 3 output if value is over threashold
-    if(analogResult>THRESH){
+    if(analogResult>THRESHOLD){
       PORTB |= (1<<PB3);
     }else{
       PORTB &= ~(1<<PB3);
