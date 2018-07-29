@@ -17,39 +17,44 @@ External Reference	0	Connect Voltage Reference
 //ADCSRA - This register is responsible for enabling ADC, start ADC converting, prescaler selection and interrupt control.
 
 //
-static inline void initADC0(void){
-  ADMUX |= (1<<REFS0) | (1<<REFS1);               /* reference AVCC voltage */
-  ADCSRA |= (1<<ADPS1) | (1<<ADPS0);  /*ADC clock prescaler /8 */
-  ADCSRA |= (1<<ADEN);                           /* enable ADC */
-}
+
+volatile int analogResult = 0;
+
 int main(void){
 
-  //uint8_t ledValue;
-  uint16_t adcValue;
-  //uint8_t i;
+  //pin 4 read, pin 3 write
+  DDRB &= ~(1<<DDB4);
+  DDRB |= (1<<DDB3);
+  
+  //set voltage to internal, right and Right adjust
+  ADMUX &= ~((1<<REFS1)|(1<<REFS0)|(1<<ADLAR));
+  
+  //set input as ADC2 (PIN 4)
+  ADMUX |= (1<<MUX1);
 
-  DDRB |= 0b000001;
+  //set free running mode (dont need ADCSRA |= (1<<ADSC); every read)
+  ADCSRB = &=~((1<<ADTS2)|(1<<ADTS1)|(1<<ADTS0));
 
-  PORTB |= 0b00000001;
-  _delay_ms(5000);
-  PORTB |= 0b00000000;
+  //Digital input disable (not required)
+  DIDR0 |= (1<<ADC2D);
 
-  initADC0();
-  DDRB = 0xff;
+  //enable ADC
+  ADCSRA |= (1<<ADEN);
+
+  //convert
+  ADCSRA |= (1<<ADSC);
 
   while(1){
-    //ADC conversion
-    ADCSRA |= (1<<ADSC);    
-    loop_until_bit_is_clear(ADCSRA, ADSC);
-    // read ADC
-    adcValue = ADC;
-    if(adcValue > 250){
-      PORTB = 0b00000001;
+
+    while ((ADCSRA & (1<<ADSC))); //wait for conversion to finish
+    // ADCH last 2 bits of result in HIGH register shift to combine into 10 bit result
+    analogResult = (ADCH<<8)|ADCL;
+
+    if(analogResult>250){
+      PORTB |= (1<<PB3);
     }else{
-      PORTB = 0b00000000;
+      PORTB &= ~(1<<PB3);
     }
-    //ledValue = (adcValue>>7);
-    _delay_ms(50);
   }
   return 0;
 }
