@@ -48,7 +48,7 @@ int main(void){
 
   while(1){
     PORTB |= (1<<PB0);/////
-    while ((ADCSRA & (1<<ADSC))); //wait for conversion to finish
+    //while ((ADCSRA & (1<<ADSC))); //wait for conversion to finish
     _delay_ms(1000);/////
     PORTB &= ~(1<<PB0);/////
     
