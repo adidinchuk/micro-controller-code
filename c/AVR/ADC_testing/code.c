@@ -45,10 +45,10 @@ int main(void){
     PORTB |= (1<<PB2);
     _delay_ms(1000);
     ADCSRA |= (1<<ADSC);
-    //loop_until_bit_is_clear(ADCSRA, ADSC);
+    loop_until_bit_is_clear(ADCSRA, ADSC);
     //while((ADCSRA & (1<<ADSC)));
     PORTB &= ~(1<<PB2);
-    _delay_ms(1000);
+    
     analogResult = (ADCH<<8)|ADCL;
     //enable Pin 3 output if value is over threashold
     if(analogResult>THRESHOLD){
@@ -56,6 +56,7 @@ int main(void){
     }else{
       PORTB &= ~(1<<PB3);
     }
+    _delay_ms(1000);
   }
   return 0;
 }
