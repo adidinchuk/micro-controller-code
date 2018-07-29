@@ -29,7 +29,7 @@ int main(void){
   ADMUX |= (1<<MUX1);
 
   //set free running mode (dont need ADCSRA |= (1<<ADSC); every read)
-  //ADCSRB &=~((1<<ADTS2)|(1<<ADTS1)|(1<<ADTS0));
+  ADCSRB &=~((1<<ADTS2)|(1<<ADTS1)|(1<<ADTS0));
 
   //Digital input disable (not mandatory, reduces power consumption)
   DIDR0 |= (1<<ADC2D);
@@ -39,11 +39,12 @@ int main(void){
   ADCSRA |= ((1<<ADEN)|(1<<ADATE));
 
   //convert analog to digital
-  //ADCSRA |= (1<<ADSC);
+  ADCSRA |= (1<<ADSC);
 
   while(1){
-    ADCSRA |= (1<<ADSC);
-    loop_until_bit_is_clear(ADCSRA, ADSC);
+    
+    //loop_until_bit_is_clear(ADCSRA, ADSC);
+    while((ADCSRA & (1<<ADSC)));
     analogResult = (ADCH<<8)|ADCL;
     //enable Pin 3 output if value is over threashold
     if(analogResult>THRESHOLD){
