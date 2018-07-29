@@ -43,7 +43,8 @@ int main(void){
     //while(!(ADCSRA&(1<<ADIF))); //wait for computation to complete 
     
     analogResult = ((ADCH<<8)|ADCL);
-
+    ADCH = 0;
+    ADCL = 0;
     //enable Pin 3 output if value is over threashold
     if(analogResult>THRESHOLD){
       PORTB |= (1<<PB3);
