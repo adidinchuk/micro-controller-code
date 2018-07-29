@@ -36,6 +36,7 @@ int main(void){
 
   //enable ADC (ADEN) and enables ADC interrupt (ADIE)
   //Set ADATE to ensure interrupt can trigger at any time
+  ADCSRA |= (1 << ADPS1) | (1 << ADPS0);
   ADCSRA |= (1<<ADEN);
 
   //convert analog to digital
