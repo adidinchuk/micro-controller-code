@@ -38,7 +38,7 @@ int main(void){
     ADCSRA |=(1<<ADIF);
     ADCSRA |= (1<<ADSC);
     //loop_until_bit_is_clear(ADCSRA, (1<<ADIF));
-    while(!(ADCSRA&(1<<ADIF)); //wait for computation to complete 
+    while(!(ADCSRA&(1<<ADIF))); //wait for computation to complete 
     
     analogResult = ((ADCH<<8)|ADCL);
 
