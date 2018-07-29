@@ -4,6 +4,7 @@
 #define F_CPU 1000000L                      /* atTiny85 Bautrate */
 #include <avr/io.h>                        /* Defines pins, ports, etc */
 #include <util/delay.h>                     /* Functions to waste time */
+#include <avr/interupt.h>
 #include "pinDefines.h"
 
 /*-----
