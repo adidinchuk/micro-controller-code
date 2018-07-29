@@ -33,7 +33,7 @@ int main(void){
   ADMUX |= (1<<MUX1);
 
   //set free running mode (dont need ADCSRA |= (1<<ADSC); every read)
-  ADCSRB = &=~((1<<ADTS2)|(1<<ADTS1)|(1<<ADTS0));
+  ADCSRB &=~((1<<ADTS2)|(1<<ADTS1)|(1<<ADTS0));
 
   //Digital input disable (not required)
   DIDR0 |= (1<<ADC2D);
