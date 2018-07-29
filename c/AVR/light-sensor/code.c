@@ -62,7 +62,7 @@ int main(void){
     //analogResult = (ADCH<<8)|ADCL;
     //PORTB |= (1<<PB0);
     
-    if(analogResult>250){
+    if(analogResult>800){
       PORTB |= (1<<PB3);
     }else{
       PORTB &= ~(1<<PB3);
