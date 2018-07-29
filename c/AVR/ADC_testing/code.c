@@ -45,9 +45,9 @@ int main(void){
     PORTB |= (1<<PB2);
     _delay_ms(1000);
     ADCSRA |= (1<<ADSC);
-    //loop_until_bit_is_clear(ADCSRA, ADSC);
-    analogResult = (ADCH<<8)|ADCL;
+    //loop_until_bit_is_clear(ADCSRA, ADSC);    
     while((ADCSRA & (1<<ADSC)));
+    analogResult = (ADCH<<8)|ADCL;
     PORTB &= ~(1<<PB2);
     
     
