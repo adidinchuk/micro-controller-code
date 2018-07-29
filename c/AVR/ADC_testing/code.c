@@ -35,8 +35,8 @@ int main(void){
 
   while(1){
     //convert analog to digital
-    ADMUX &= 0xf0;
-    ADMUX |= (1<<MUX1);
+    //ADMUX &= 0xf0;
+    //ADMUX |= (1<<MUX1);
     ADCSRA |= ( 1 << ADSC );
     while( ADCSRA & ( 1 << ADIF ) );
     //loop_until_bit_is_clear(ADCSRA, (1<<ADIF));
