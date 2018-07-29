@@ -25,7 +25,7 @@ int main(void){
   //pin 4 read, pin 3 write
   DDRB &= ~(1<<DDB4);
   DDRB |= ((1<<DDB3)|(1<<DDB0));
-  
+  PORTB &= ~(1<<PB0);/////
   //set voltage to internal, right and Right adjust
   ADMUX &= ~((1<<REFS1)|(1<<REFS0)|(1<<ADLAR));
   
@@ -45,13 +45,15 @@ int main(void){
   ADCSRA |= (1<<ADSC);
 
   while(1){
-
+    PORTB |= (1<<PB0);/////
     while ((ADCSRA & (1<<ADSC))); //wait for conversion to finish
+    _delay_ms(1000);/////
+    PORTB &= ~(1<<PB0);/////
+    
     // ADCH last 2 bits of result in HIGH register shift to combine into 10 bit result
     analogResult = (ADCH<<8)|ADCL;
     PORTB |= (1<<PB0);
-    _delay_ms(1000);
-    PORTB &= ~(1<<PB0);
+    
     if(analogResult>250){
       PORTB |= (1<<PB3);
     }else{
