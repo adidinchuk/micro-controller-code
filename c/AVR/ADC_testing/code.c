@@ -20,7 +20,7 @@ volatile int analogResult = 0;
 int main(void){
   //pin 4 read, pin 3 write
   DDRB &= ~(1<<DDB4);
-  DDRB |= (1<<DDB3);
+  DDRB |= ((1<<DDB3)|(1<<DDB2));
   
   //set voltage to internal and right adjust (ADLAR)
   ADMUX &= ~((1<<REFS1)|(1<<REFS0)|(1<<ADLAR));
@@ -42,9 +42,12 @@ int main(void){
   ADCSRA |= (1<<ADSC);
 
   while(1){
-    
+    PORTB |= (1<<PB2);
+    _delay_ms(1000);
     //loop_until_bit_is_clear(ADCSRA, ADSC);
     while((ADCSRA & (1<<ADSC)));
+    PORTB &= ~(1<<PB2);
+    _delay_ms(1000);
     analogResult = (ADCH<<8)|ADCL;
     //enable Pin 3 output if value is over threashold
     if(analogResult>THRESHOLD){
