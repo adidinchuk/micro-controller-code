@@ -36,9 +36,10 @@ int main(void){
   while(1){
     //convert analog to digital
     ADCSRA |= (1<<ADSC);    
-    while((ADCSRA & (1<<ADSC))); //wait for computation to complete 
+    loop_until_bit_is_clear(ADCSRA, (1<<ADIF));
+    //while((ADCSRA & (1<<ADSC))); //wait for computation to complete 
 
-    analogResult = (ADCH<<8)|ADCL;
+    analogResult = ((ADCH<<8)|ADCL);
 
     //enable Pin 3 output if value is over threashold
     if(analogResult>THRESHOLD){
