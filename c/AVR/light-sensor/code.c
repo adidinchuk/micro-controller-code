@@ -39,7 +39,7 @@ int main(void){
   DIDR0 |= (1<<ADC2D);
 
   //enable ADC
-  ADCSRA |= (1<<ADEN);
+  ADCSRA |= ((1<<ADEN)|(1<<ADATE));
 
   //convert
   ADCSRA |= (1<<ADSC);
