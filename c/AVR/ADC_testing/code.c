@@ -35,16 +35,11 @@ int main(void){
 
   while(1){
     //convert analog to digital
-    //ADMUX &= 0xf0;
-    //ADMUX |= (1<<MUX1);
     ADCSRA |= ( 1 << ADSC );
-    while( ADCSRA & ( 1 << ADIF ) );
-    //loop_until_bit_is_clear(ADCSRA, (1<<ADIF));
-    //while(!(ADCSRA&(1<<ADIF))); //wait for computation to complete 
-    
+
+    while( ADCSRA & ( 1 << ADIF ) );//wait for the value to be computed
+   
     analogResult = ((ADCH<<8)|ADCL);
-    ADCH = 0;
-    ADCL = 0;
     //enable Pin 3 output if value is over threashold
     if(analogResult>THRESHOLD){
       PORTB |= (1<<PB3);
