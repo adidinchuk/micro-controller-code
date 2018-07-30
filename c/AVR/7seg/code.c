@@ -4,7 +4,7 @@
 #include <avr/io.h>                        /* Defines pins, ports, etc */
 #include <util/delay.h>                     /* Functions to waste time */
 
-void pulse_register(int pin, int t);
+void pulse_sr(int pin, int t);
 void my_delay_ms(int ms);
 void init_7_seg(int DS, int CLK, int SHCP);
 
@@ -14,7 +14,7 @@ int ShiftClockChannel; // data out signal for the shift register
 //button number
 int BTN = 0b00001000;
 
-int PAUSE = 50;
+int PAUSE = 1;
 int old_state = 0b00000000;
 
 // 7 segment display encoding 0-9
@@ -35,10 +35,24 @@ void init_7_seg(int DS, int CLK, int SHCP){
   DataSignalChannel = DS;
   ClockChannel = CLK;
   ShiftClockChannel = SHCP;
-}  
+}
+
+void push_to_sr(int data[8]){
+  int dp;
+  for (dp = 0; dp < sizeof(data)/sizeof(data[0]); dp++){
+    
+    if (data[dp])
+      PORTB |= (1<<DataSignalChannel);
+    else      
+      PORTB &= ~(1<<DataSignalChannel);
+    
+    pulse_sr(ClockChannel, PAUSE);
+  }
+  my_delay_ms(PAUSE);
+}
 
 int main(void) {
-  init_7_seg(0b00000001, 0b00000010, 0b00000100);
+  init_7_seg(1, 2, 3);
   // -------- Inits --------- //
   DDRB |= 0b00000111;            /* Data Direction Register B:
                                    set first 3 pins as out. */
@@ -47,17 +61,18 @@ int main(void) {
   while (1)  {    
     int i, x;
     for (i = 0; i < sizeof(DIGITS)/sizeof(DIGITS[0]); i++)   {
-        for (x = 0; x < sizeof(DIGITS[i])/sizeof(DIGITS[i][0]); x++)     {
+        push_to_sr(DIGITS[i]);
+       /*for (x = 0; x < sizeof(DIGITS[i])/sizeof(DIGITS[i][0]); x++)     {
         if (DIGITS[i][x]){
             PORTB = PORTB | DataSignalChannel;
         }else{
                 twos = ~DataSignalChannel;
                 PORTB = PORTB & twos;
         }                 
-        pulse_register(ClockChannel, PAUSE);
+        pulse_sr(ClockChannel, PAUSE);
         }
-        my_delay_ms(PAUSE);
-        pulse_register(ShiftClockChannel, PAUSE);
+        my_delay_ms(PAUSE);*/
+        pulse_sr(ShiftClockChannel, PAUSE);
         while ((PINB & BTN) == 0x00){}
     }
         
@@ -68,9 +83,9 @@ int main(void) {
 // pulse function to pulse a pin
 // pin - GPIO pin to pulse
 // t - pulse delay between high and low
-void pulse_register(int pin, int t){
+void pulse_sr(int pin, int t){
   old_state = PORTB;
-  PORTB = PORTB | pin;          
+  PORTB |= (1<<pin);
   my_delay_ms(t);
   PORTB = old_state;
 }
