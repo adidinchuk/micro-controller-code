@@ -59,7 +59,7 @@ int main(void) {
   
 
   while (1)  {    
-    int i, x;
+    int i;
     
     for (i = 0; i < sizeof(DIGITS)/sizeof(DIGITS[0]); i++)   {
         push_to_sr(DIGITS[i]);
