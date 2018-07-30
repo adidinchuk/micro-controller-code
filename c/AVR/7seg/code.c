@@ -39,7 +39,7 @@ void init_7_seg(int DS, int CLK, int SHCP){
 
 void push_to_sr(int const data[8]){
  /* int twos = 0b00000000;        /* 2s complement holder */
-  int dp;
+ /* int dp;
   for (dp = 0; dp < sizeof(data)/sizeof(data[0]); dp++)     {
     if (data[dp]){
         PORTB = PORTB | DataSignalChannel;
