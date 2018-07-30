@@ -53,7 +53,7 @@ void push_to_sr(int const data[8]){
 }
 
 int main(void) {
-  init_7_seg(1, 0b00000010, 0b00000100);
+  init_7_seg(0b00000001, 0b00000010, 0b00000100);
   // -------- Inits --------- //
   DDRB |= 0b00000111;            /* Data Direction Register B:
                                    set first 3 pins as out. */
@@ -61,15 +61,15 @@ int main(void) {
 
   while (1)  {    
     int i, x;
-    //int twos = 0b00000000;
+    int twos = 0b00000000;
     for (i = 0; i < sizeof(DIGITS)/sizeof(DIGITS[0]); i++)   {
       //  push_to_sr(DIGITS[i]);
         for (x = 0; x < sizeof(DIGITS[i])/sizeof(DIGITS[i][0]); x++)     {
         if (DIGITS[i][x]){
-            PORTB |= (1<<DataSignalChannel);
+            PORTB = PORTB | DataSignalChannel;
         }else{
-                //twos = ~DataSignalChannel;
-                PORTB &= ~(1<<DataSignalChannel);
+            twos = ~DataSignalChannel;
+            PORTB = PORTB & twos;
         }                 
         pulse_sr(ClockChannel, PAUSE);
         }
