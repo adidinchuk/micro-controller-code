@@ -58,7 +58,7 @@ int main(void) {
     for (i = 0; i < sizeof(digits)/sizeof(digits[0]); i++)   {
         push_to_sr(digits[i], sizeof(digits[i])/sizeof(digits[i][0]));        
         pulse_sr(ShiftClockChannel, PAUSE);
-        while ((PINB & (1<<BTN) == 0x00){}
+        while ((PINB & (1<<BTN)) == 0x00){}
     }
   }
   return 0;
