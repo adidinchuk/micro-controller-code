@@ -38,7 +38,7 @@ void init_7_seg(int DS, int CLK, int SHCP){
 }
 
 void push_to_sr(int const data[8]){
-  int twos = 0b00000000;        /* 2s complement holder */
+ /* int twos = 0b00000000;        /* 2s complement holder */
   int dp;
   for (dp = 0; dp < sizeof(data)/sizeof(data[0]); dp++)     {
     if (data[dp]){
@@ -49,7 +49,7 @@ void push_to_sr(int const data[8]){
     }                 
     pulse_sr(ClockChannel, PAUSE);
     }
-    my_delay_ms(PAUSE);
+    my_delay_ms(PAUSE);*/
 }
 
 int main(void) {
@@ -60,10 +60,11 @@ int main(void) {
   
 
   while (1)  {    
-    int i;
+    int i, x;
+    int twos = 0b00000000;
     for (i = 0; i < sizeof(DIGITS)/sizeof(DIGITS[0]); i++)   {
-        push_to_sr(DIGITS[i]);
-  /*      for (x = 0; x < sizeof(DIGITS[i])/sizeof(DIGITS[i][0]); x++)     {
+      //  push_to_sr(DIGITS[i]);
+        for (x = 0; x < sizeof(DIGITS[i])/sizeof(DIGITS[i][0]); x++)     {
         if (DIGITS[i][x]){
             PORTB = PORTB | DataSignalChannel;
         }else{
@@ -72,7 +73,7 @@ int main(void) {
         }                 
         pulse_sr(ClockChannel, PAUSE);
         }
-        my_delay_ms(PAUSE);*/
+        my_delay_ms(PAUSE);
         pulse_sr(ShiftClockChannel, PAUSE);
         while ((PINB & BTN) == 0x00){}
     }
