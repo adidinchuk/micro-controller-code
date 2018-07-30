@@ -56,7 +56,6 @@ int main(void) {
   // -------- Inits --------- //
   DDRB |= 0b00000111;            /* Data Direction Register B:
                                    set first 3 pins as out. */
-  int twos = 0b00000000;        /* 2s complement holder */
 
   while (1)  {    
     int i;
