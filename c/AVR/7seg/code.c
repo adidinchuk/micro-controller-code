@@ -12,10 +12,9 @@ int DataSignalChannel; // shift register data signal
 int ClockChannel; // artificial clock signal for shift register
 int ShiftClockChannel; // data out signal for the shift register
 //button number
-int BTN = 0b00001000;
-
-int PAUSE = 50;
-int old_state = 0b00000000;
+int BTN;
+int PAUSE = 1;
+int old_state = 0;
 
 // 7 segment display encoding 0-9
 int digits[10][8] = {
@@ -45,28 +44,24 @@ void push_to_sr(int data[8], int bit_count){
     else
       PORTB &= ~(1<<DataSignalChannel);                
     pulse_sr(ClockChannel, PAUSE);
-    }
-    //my_delay_ms(PAUSE);
+  }    
 }
 
 int main(void) {
+  BTN = 3;
   init_7_seg(0, 1, 2);
   // -------- Inits --------- //
-  DDRB |= 0b00000111;            /* Data Direction Register B:
-                                   set first 3 pins as out. */
-  
-
-  while (1)  {    
-    int i;
-    
+  DDRB |= ((1<<DataSignalChannel)|(1<<ClockChannel)|(1<<ShiftClockChannel));
+  /* Data Direction Register B: set first 3 pins as out. */
+  while (1)  {
+    int i;    
     for (i = 0; i < sizeof(digits)/sizeof(digits[0]); i++)   {
         push_to_sr(digits[i], sizeof(digits[i])/sizeof(digits[i][0]));        
         pulse_sr(ShiftClockChannel, PAUSE);
-        while ((PINB & BTN) == 0x00){}
+        while ((PINB & (1<<BTN) == 0x00){}
     }
-        
-  }    
-  return 0;                            /* This line is never reached */
+  }
+  return 0;
 }
 
 // pulse function to pulse a pin
