@@ -42,14 +42,14 @@ void push_to_sr(int const data[8]){
   int dp;
   for (dp = 0; dp < sizeof(data)/sizeof(data[0]); dp++)     {
     if (data[dp]){
-      PORTB |= DataSignalChannel;
+        PORTB = PORTB | DataSignalChannel;
     }else{
-      twos = ~DataSignalChannel;
-      PORTB &= ~DataSignalChannel;
+            twos = ~DataSignalChannel;
+            PORTB = PORTB & twos;
     }                 
     pulse_sr(ClockChannel, PAUSE);
-  }
-  my_delay_ms(PAUSE);
+    }
+    my_delay_ms(PAUSE);
 }
 
 int main(void) {
