@@ -18,7 +18,7 @@ int PAUSE = 50;
 int old_state = 0b00000000;
 
 // 7 segment display encoding 0-9
-const int DIGITS[10][8] = {
+int const DIGITS[10][8] = {
     {1, 1, 1, 1, 1, 1, 1, 0},
     {1, 0, 1, 1, 0, 0, 0, 0},
     {1, 1, 1, 0, 1, 1, 0, 1},
@@ -37,7 +37,8 @@ void init_7_seg(int DS, int CLK, int SHCP){
   ShiftClockChannel = SHCP;
 }
 
-void push_to_sr(int data[8]){
+void push_to_sr(int const data[8]){
+  int twos = 0b00000000;        /* 2s complement holder */
   int dp;
   for (dp = 0; dp < sizeof(data)/sizeof(data[0]); dp++)     {
     if (data[dp]){
@@ -56,12 +57,13 @@ int main(void) {
   // -------- Inits --------- //
   DDRB |= 0b00000111;            /* Data Direction Register B:
                                    set first 3 pins as out. */
-  int twos = 0b00000000;        /* 2s complement holder */
+  
 
   while (1)  {    
     int i, x;
     for (i = 0; i < sizeof(DIGITS)/sizeof(DIGITS[0]); i++)   {
-        for (x = 0; x < sizeof(DIGITS[i])/sizeof(DIGITS[i][0]); x++)     {
+        push_to_sr(DIGITS[i])
+  /*      for (x = 0; x < sizeof(DIGITS[i])/sizeof(DIGITS[i][0]); x++)     {
         if (DIGITS[i][x]){
             PORTB = PORTB | DataSignalChannel;
         }else{
@@ -70,7 +72,7 @@ int main(void) {
         }                 
         pulse_sr(ClockChannel, PAUSE);
         }
-        my_delay_ms(PAUSE);
+        my_delay_ms(PAUSE);*/
         pulse_sr(ShiftClockChannel, PAUSE);
         while ((PINB & BTN) == 0x00){}
     }
