@@ -44,7 +44,7 @@ int main(void) {
   int twos = 0b00000000;        /* 2s complement holder */
 
   while (1)  {
-    pulse(CLK, PAUSE) ;
+    //pulse(CLK, PAUSE) ;
     int i, x;
     for (i = 0; i < sizeof(digits)/sizeof(digits[0]); i++)   {
         for (x = 0; x < sizeof(digits[i])/sizeof(digits[i][0]); x++)     {
