@@ -18,7 +18,7 @@ int PAUSE = 50;
 int old_state = 0b00000000;
 
 // 7 segment display encoding 0-9
-int const DIGITS[10][8] = {
+int digits[10][8] = {
     {1, 1, 1, 1, 1, 1, 1, 0},
     {1, 0, 1, 1, 0, 0, 0, 0},
     {1, 1, 1, 0, 1, 1, 0, 1},
@@ -37,7 +37,7 @@ void init_7_seg(int DS, int CLK, int SHCP){
   ShiftClockChannel = SHCP;
 }
 
-void push_to_sr(int const data[8], int bit_count){
+void push_to_sr(int data[8], int bit_count){
  /* int twos = 0b00000000;*/        /* 2s complement holder */
   int dp;
   for (dp = 0; dp < bit_count; dp++)     {
