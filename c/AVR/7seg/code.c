@@ -4,7 +4,7 @@
 #include <avr/io.h>                        /* Defines pins, ports, etc */
 #include <util/delay.h>                     /* Functions to waste time */
 
-void pulse (int pin, int t);
+void pulse_register(int pin, int t);
 void my_delay_ms(int ms);
 void init_7_seg(int DS, int CLK, int SHCP);
 
