@@ -14,11 +14,11 @@ int ShiftClockChannel; // data out signal for the shift register
 //button number
 int BTN = 0b00001000;
 
-int PAUSE = 1;
+int PAUSE = 50;
 int old_state = 0b00000000;
 
 // 7 segment display encoding 0-9
-int const DIGITS[10][8] = {
+const int DIGITS[10][8] = {
     {1, 1, 1, 1, 1, 1, 1, 0},
     {1, 0, 1, 1, 0, 0, 0, 0},
     {1, 1, 1, 0, 1, 1, 0, 1},
@@ -37,31 +37,31 @@ void init_7_seg(int DS, int CLK, int SHCP){
   ShiftClockChannel = SHCP;
 }
 
-void push_to_sr(int const data[8]){
+void push_to_sr(int data[8]){
   int dp;
-  for (dp = 0; dp < sizeof(data)/sizeof(data[0]); dp++){
-    
-    if (data[dp])
-      PORTB |= (1<<DataSignalChannel);
-    else      
-      PORTB &= ~(1<<DataSignalChannel);
-    
+  for (dp = 0; dp < sizeof(data)/sizeof(data[0]); dp++)     {
+    if (data[dp]){
+      PORTB |= DataSignalChannel;
+    }else{
+      twos = ~DataSignalChannel;
+      PORTB &= ~DataSignalChannel;
+    }                 
     pulse_sr(ClockChannel, PAUSE);
   }
   my_delay_ms(PAUSE);
 }
 
 int main(void) {
-  init_7_seg(1, 2, 3);
+  init_7_seg(0b00000001, 0b00000010, 0b00000100);
   // -------- Inits --------- //
   DDRB |= 0b00000111;            /* Data Direction Register B:
                                    set first 3 pins as out. */
+  int twos = 0b00000000;        /* 2s complement holder */
 
   while (1)  {    
-    int i;
+    int i, x;
     for (i = 0; i < sizeof(DIGITS)/sizeof(DIGITS[0]); i++)   {
-        push_to_sr(DIGITS[i]);
-       /*for (x = 0; x < sizeof(DIGITS[i])/sizeof(DIGITS[i][0]); x++)     {
+        for (x = 0; x < sizeof(DIGITS[i])/sizeof(DIGITS[i][0]); x++)     {
         if (DIGITS[i][x]){
             PORTB = PORTB | DataSignalChannel;
         }else{
@@ -70,7 +70,7 @@ int main(void) {
         }                 
         pulse_sr(ClockChannel, PAUSE);
         }
-        my_delay_ms(PAUSE);*/
+        my_delay_ms(PAUSE);
         pulse_sr(ShiftClockChannel, PAUSE);
         while ((PINB & BTN) == 0x00){}
     }
@@ -84,7 +84,7 @@ int main(void) {
 // t - pulse delay between high and low
 void pulse_sr(int pin, int t){
   old_state = PORTB;
-  PORTB |= (1<<pin);
+  PORTB = PORTB | pin;          
   my_delay_ms(t);
   PORTB = old_state;
 }
