@@ -44,21 +44,20 @@ int main(void) {
                                    set first 3 pins as out. */
   int twos = 0b00000000;        /* 2s complement holder */
 
-  while (1)  {
-    //pulse(CLK, PAUSE) ;
+  while (1)  {    
     int i, x;
     for (i = 0; i < sizeof(DIGITS)/sizeof(DIGITS[0]); i++)   {
         for (x = 0; x < sizeof(DIGITS[i])/sizeof(DIGITS[i][0]); x++)     {
         if (DIGITS[i][x]){
-            PORTB = PORTB | DS;
+            PORTB = PORTB | DataSignalChannel;
         }else{
-                twos = ~DS;
+                twos = ~DataSignalChannel;
                 PORTB = PORTB & twos;
         }                 
-        pulse_register(CLK, PAUSE);
+        pulse_register(ClockChannel, PAUSE);
         }
         my_delay_ms(PAUSE);
-        pulse_register(SHCP, PAUSE);
+        pulse_register(ShiftClockChannel, PAUSE);
         while ((PINB & BTN) == 0x00){}
     }
         
