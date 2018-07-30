@@ -53,7 +53,7 @@ void push_to_sr(int const data[8]){
 }
 
 int main(void) {
-  init_7_seg(1, 2, 3);
+  init_7_seg(1, 0b00000010, 0b00000100);
   // -------- Inits --------- //
   DDRB |= 0b00000111;            /* Data Direction Register B:
                                    set first 3 pins as out. */
@@ -87,7 +87,7 @@ int main(void) {
 // t - pulse delay between high and low
 void pulse_sr(int pin, int t){
   old_state = PORTB;
-  PORTB |= (1<<PORTB);          
+  PORTB = PORTB | pin;
   my_delay_ms(t);
   PORTB = old_state;
 }
