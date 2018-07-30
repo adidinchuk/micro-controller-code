@@ -37,10 +37,10 @@ void init_7_seg(int DS, int CLK, int SHCP){
   ShiftClockChannel = SHCP;
 }
 
-void push_to_sr(int const data[8]){
+void push_to_sr(int const data[8], int bit_count){
  /* int twos = 0b00000000;*/        /* 2s complement holder */
   int dp;
-  for (dp = 0; dp < sizeof(data)/sizeof(data[0]); dp++)     {
+  for (dp = 0; dp < bit_count; dp++)     {
     if (data[dp]){
       PORTB |= (1<<DataSignalChannel);
         }else{            
@@ -62,7 +62,7 @@ int main(void) {
     int i;
     
     for (i = 0; i < sizeof(DIGITS)/sizeof(DIGITS[0]); i++)   {
-        push_to_sr(DIGITS[i]);
+        push_to_sr(DIGITS[i], sizeof(DIGITS[i])/sizeof(DIGITS[i][0]));
         /*for (x = 0; x < sizeof(DIGITS[i])/sizeof(DIGITS[i][0]); x++)     {
         if (DIGITS[i][x]){
             PORTB |= (1<<DataSignalChannel);
