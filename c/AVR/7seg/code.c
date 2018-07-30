@@ -60,9 +60,9 @@ int main(void) {
   
 
   while (1)  {    
-    int i, x;
+    int i;
     for (i = 0; i < sizeof(DIGITS)/sizeof(DIGITS[0]); i++)   {
-        push_to_sr(DIGITS[i])
+        push_to_sr(DIGITS[i]);
   /*      for (x = 0; x < sizeof(DIGITS[i])/sizeof(DIGITS[i][0]); x++)     {
         if (DIGITS[i][x]){
             PORTB = PORTB | DataSignalChannel;
