@@ -3,6 +3,7 @@
 //#include <util/delay.h>
 #include "pinDefines.h"
 #include "USART.h"
+#include "USART.c"
 int main(void) {
 char serialCharacter;
 // -------- Inits --------- //
