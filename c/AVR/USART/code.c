@@ -9,7 +9,7 @@ Takes in a character at a time and sends it right back out,
 #include <util/delay.h>
 #include "pinDefines.h"
 #include "USART.h"
-
+#include "USART.c"
 int main(void) {
   char serialCharacter;
 
