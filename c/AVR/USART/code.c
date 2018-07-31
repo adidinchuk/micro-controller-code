@@ -1,6 +1,6 @@
 // ------- Preamble -------- //
 #include <avr/io.h>
-#include <util/delay.h>
+//#include <util/delay.h>
 #include "pinDefines.h"
 #include "USART.h"
 int main(void) {
