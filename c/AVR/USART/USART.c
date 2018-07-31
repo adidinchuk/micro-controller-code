@@ -17,7 +17,7 @@
 */
 
 #include <avr/io.h>
-#include "USART.h"
+//#include "USART.h"
 #include <util/setbaud.h>
 
 void initUSART(void) {                                /* requires BAUD */
