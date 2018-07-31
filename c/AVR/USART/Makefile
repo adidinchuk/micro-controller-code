@@ -5,9 +5,12 @@ CFLAGS=-g -Os -Wall -mcall-prologues -mmcu=$(MULTIPOINT_CONTROL_UNIT)
 OBJ2HEX=/usr/bin/avr-objcopy
 AVRDUDE=/usr/local/bin/avrdude
 TARGET=code
+F_CPU = 1000000UL  
+BAUD  = 9600UL
+CPPFLAGS = -DF_CPU=$(F_CPU) -DBAUD=$(BAUD) -I.
 
 all :
-	$(CC) $(CFLAGS) $(TARGET).c -o $(TARGET)
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET).c -o $(TARGET)
 	$(OBJ2HEX) -R .eeprom -O ihex $(TARGET) $(TARGET).hex
 	rm -f $(TARGET)
 
