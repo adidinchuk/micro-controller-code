@@ -26,4 +26,4 @@ PROGRAMS = code
 
 LIBS = $(LIBS) -I /home/pi/dev/lib/c/NewSoftSerial
 
-include Makefile.avr
+include ../Makefile.avr
