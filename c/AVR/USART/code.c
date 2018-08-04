@@ -1,31 +1,26 @@
-/*
-A simple test of serial-port functionality.
-Takes in a character at a time and sends it right back out,
- displaying the ASCII value on the LEDs.
-*/
+#include <SoftwareSerial.h>
+// ***
+// *** Define the RX and TX pins. Choose any two
+// *** pins that are unused. Try to avoid D0 (pin 5)
+// *** and D2 (pin 7) if you plan to use I2C.
+// ***
+#define RX    3   // *** D3, Pin 2
+#define TX    4   // *** D4, Pin 3
 
-// ------- Preamble -------- //
-#include <avr/io.h>
-#include <util/delay.h>
-#include "pinDefines.h"
-#include "USART.h"
-#include "USART.c"
-int main(void) {
-  char serialCharacter;
+// ***
+// *** Define the software based serial port. Using the
+// *** name Serial so that code can be used on other
+// *** platforms that support hardware based serial. On
+// *** chips that support the hardware serial, just
+// *** comment this line.
+// ***
+SoftwareSerial Serial(RX, TX);
 
-  // -------- Inits --------- //
-  LED_DDR = 0xff;                            /* set up LEDs for output */
-  initUSART();
-  printString("Hello World!\r\n");                          /* to test */
-
-  // ------ Event loop ------ //
-  while (1) {
-
-    serialCharacter = receiveByte();
-    transmitByte(serialCharacter);
-    LED_PORT = serialCharacter;
-                           /* display ascii/numeric value of character */
-
-  }                                                  /* End event loop */
-  return 0;
+void setup()
+{
+  // ***
+  // *** Initialize the Serial port
+  // ***
+  Serial.begin(9600);
+  Serial.println("Initializing...");
 }
