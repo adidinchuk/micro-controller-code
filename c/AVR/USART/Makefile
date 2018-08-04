@@ -24,6 +24,6 @@ include ../Makefile.common
 # define all programs
 PROGRAMS = code
 
-LIBS = $(LIBS) -I /home/pi/dev/lib/c/NewSoftSerial
+LIBS := $(LIBS) -I /home/pi/dev/lib/c/NewSoftSerial
 
 include ../Makefile.avr
