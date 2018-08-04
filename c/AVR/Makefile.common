@@ -1,0 +1,11 @@
+MULTIPOINT_CONTROL_UNIT=attiny85
+AVRDUDEMCU=t85
+CC=/usr/bin/avr-gcc
+CFLAGS=-g -Os -Wall -mcall-prologues -mmcu=$(MULTIPOINT_CONTROL_UNIT)
+OBJ2HEX=/usr/bin/avr-objcopy
+AVRDUDE=/usr/local/bin/avrdude
+LIBS=-I /home/pi/dev/lib/c
+TARGET=code
+F_CPU = 1000000UL  
+BAUD  = 9600UL
+CPPFLAGS = -DF_CPU=$(F_CPU) -DBAUD=$(BAUD) -I.
