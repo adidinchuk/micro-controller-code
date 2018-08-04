@@ -6,6 +6,6 @@ OBJ2HEX=/usr/bin/avr-objcopy
 AVRDUDE=/usr/local/bin/avrdude
 LIBS=-I /home/pi/dev/lib/c
 TARGET=code
-F_CPU = 1000000UL  
-BAUD  = 9600UL
-CPPFLAGS = -DF_CPU=$(F_CPU) -DBAUD=$(BAUD) -I.
+F_CPU = 8000000UL 
+BAUD  = 19200
+CPPFLAGS = -std=c++11 -DF_CPU=$(F_CPU) -DBAUD=$(BAUD) -I. 
