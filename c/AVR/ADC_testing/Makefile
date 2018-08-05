@@ -1,30 +1,23 @@
-MULTIPOINT_CONTROL_UNIT=attiny85
-AVRDUDEMCU=t85
-CC=/usr/bin/avr-gcc
-CFLAGS=-g -Os -Wall -mcall-prologues -mmcu=$(MULTIPOINT_CONTROL_UNIT)
-OBJ2HEX=/usr/bin/avr-objcopy
-AVRDUDE=/usr/local/bin/avrdude
-TARGET=code
+#############################################################################
+#
+# Makefile shell
+#
+# Description:
+# ------------
+# use make all and make install the code to the chip
+#
 
-all :
-	$(CC) $(CFLAGS) $(TARGET).c -o $(TARGET)
-	$(OBJ2HEX) -R .eeprom -O ihex $(TARGET) $(TARGET).hex
-	rm -f $(TARGET)
+ifeq ($(wildcard ../Makefile.common), )
+        $(error Configuration not found.)
+endif
 
-install : all
-	sudo gpio -g mode 22 out
-	sudo gpio -g write 22 0
-	sudo $(AVRDUDE) -p $(AVRDUDEMCU) -P /dev/spidev0.0 -c linuxspi -b 10000 -U flash:w:$(TARGET).hex
-	sudo gpio -g write 22 1
+ifeq ($(wildcard ../Makefile.avr), )
+        $(error AVR make file not found.)
+endif
 
-noreset : all
-	sudo $(AVRDUDE) -p $(AVRDUDEMCU) -P /dev/spidev0.0 -c linuxspi -b 10000 -U flash:w:$(TARGET).hex
+include ../Makefile.common
 
-fuse :
-	sudo gpio -g mode 22 out
-	sudo gpio -g write 22 0
-	sudo $(AVRDUDE) -p $(AVRDUDEMCU) -P /dev/spidev0.0 -c linuxspi -b 10000 -U lfuse:w:0x62:m -U hfuse:w:0xdf:m $
-	sudo gpio -g write 22 1
+# define all programs
+PROGRAMS = code
 
-clean :
-	rm -f *.hex *.obj *.o
+include ../Makefile.avr

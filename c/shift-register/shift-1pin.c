@@ -30,10 +30,7 @@ int main (void){
   wiringPiSetup () ;
   pinMode (SHIFT, OUTPUT) ;
   digitalWrite (SHIFT, HIGH) ;
-  //delay (ZERO);
-  //digitalWrite (SHIFT, LOW);  
-  //delay (ZERO);
-  //digitalWrite(SHIFT, HIGH);
+
   
   for (;;)  {  
     for (int i = 0; i < sizeof(digits)/sizeof(digits[0]); i++){
@@ -57,8 +54,6 @@ int main (void){
 // t - pulse delay between high and low
 void pulse_low(int pin, int t){
   digitalWrite (pin, LOW);
-  //printf("low");
-  //delay( t);
   delayMicroseconds (t) ;
   digitalWrite (pin, HIGH) ; 
 }

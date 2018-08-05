@@ -1,52 +1,29 @@
-CC=avr-gcc
-CFLAGS=-Wall -Os -DF_CPU=$(F_CPU) -mmcu=$(MCU)
-MCU=attiny85
-F_CPU=8000000UL
-PROJECT=code
+#############################################################################
+#
+# Makefile for librf24 examples on Linux
+#
+# License: GPL (General Public License)
+# Author:  gnulnulf <arco@appeltaart.mine.nu>
+# Date:    2013/02/07 (version 1.0)
+#
+# Description:
+# ------------
+# use make all and make install to install the examples
+#
 
-AVRSIZE=avr-size
-OBJDUMP=avr-objdump
+ifeq ($(wildcard ../Makefile.common), )
+        $(error Configuration not found.)
+endif
 
-OBJCOPY=avr-objcopy
-BIN_FORMAT=ihex
+ifeq ($(wildcard ../Makefile.avr), )
+        $(error AVR make file not found.)
+endif
 
-PORT=/dev/spidev0.0 
-BAUD=19200
-#PROTOCOL=avrisp
-PART=$(MCU)
-AVRDUDE=/usr/local/bin/avrdude
+include ../Makefile.common
 
-RM=rm -f
+# define all programs
+PROGRAMS = code
 
-.PHONY: all
-all: $(PROJECT).hex
+LIBS := $(LIBS) -I /home/pi/dev/lib/c/NewSoftSerial/
 
-$(PROJECT).hex: $(PROJECT).elf
-
-$(PROJECT).elf: $(PROJECT).s
-
-$(PROJECT).s: $(PROJECT).c
-
-.PHONY: clean
-clean:
-	$(RM) $(PROJECT).elf $(PROJECT).hex $(PROJECT).s $(PROJECT).disasm
-
-.PHONY: upload
-upload: $(PROJECT).hex
-	sudo gpio -g mode 22 out
-	sudo gpio -g write 22 0
-	sudo $(AVRDUDE) -c linuxspi  -p $(PART) -P $(PORT) -b $(BAUD) -U flash:w:$<
-	sudo gpio -g write 22 1
-
-size:   $(PROJECT).elf
-	$(AVRSIZE) $<
-
-disasm:	$(PROJECT).elf
-	$(OBJDUMP) -S $< > $(PROJECT).disasm
-
-
-%.elf: %.s ; $(CC) $(CFLAGS) -s -o $@ $<
-
-%.s: %.c ; $(CC) $(CFLAGS) -S -o $@ $<
-
-%.hex: %.elf ; $(OBJCOPY) -O $(BIN_FORMAT) -R .eeprom $< $@
+include ../Makefile.avr

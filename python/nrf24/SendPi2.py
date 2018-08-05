@@ -23,23 +23,20 @@ dht11_data_pin = 18
 GPIO.setup(dht11_data_pin, GPIO.OUT)
 GPIO.output(dht11_data_pin, GPIO.HIGH)
 
+#radio setup
 radio.begin(0, transmit_pin) #Set pins CE - GPIO22, CSN GPIO8/SPICSO
 time.sleep(1)
 radio.setRetries(15,15)
 radio.setPayloadSize(32)
 radio.setChannel(0x60)
-
 radio.setDataRate(NRF24.BR_2MBPS)
 radio.setPALevel(NRF24.PA_MIN)
 radio.setAutoAck(True)
 radio.enableDynamicPayloads()
 radio.enableAckPayload()
-
-
 radio.openWritingPipe(pipes[1])
 radio.openReadingPipe(1, pipes[0])
 radio.printDetails()
-
 
 c=1
 while True:
