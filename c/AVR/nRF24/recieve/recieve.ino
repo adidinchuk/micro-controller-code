@@ -3,21 +3,18 @@
  *
  * This code is a sketch for an arduino this code is intended to test connectivity with python/nRF24/send.py and python/nRF24/response.py
  */
-
-
-#include <SPI.h>
 #include "nRF24L01.h"
 #include "RF24.h"
 #include "printf.h"
-
 // Hardware configuration: Set up nRF24L01 radio on SPI bus plus pins 7 & 8 
-RF24 radio(7,8);
+RF24 radio(9,10);
 int rec[10] = {};
 uint64_t addresses[] = { 0xe7e7e7e7e7LL, 0xc2c2c2c2c2LL };
 
 // Set up roles to simplify testing 
-boolean role;                                    // The main role variable, holds the current role identifier
+
 boolean role_ping_out = 1, role_pong_back = 0;   // The two different roles.
+boolean role = role_pong_back;                                    // The main role variable, holds the current role identifier
 
 void setup() {
 
@@ -95,26 +92,26 @@ void loop(void){
       char data[22];                                     // Variable for the received timestamp
       while (radio.available()) {                                   // While there is data ready
         radio.read( &data, sizeof(data) );             // Get the payload
-        printf("%.22s\n", data);
+        //printf("%.22s\n", data);
       }    
 
-      char response[6] = "Gatcha";
+      char response[2] = "OK";
       // First, stop listening so we can talk   
       radio.writeAckPayload(1, &response, sizeof(response));
 
       //radio.startListening();                                       // Now, resume listening so we catch the next packets.     
-      Serial.println("Sent response ");  
-      printf("%.6s\n", response);
-      Serial.println("\n\r"); 
+      //Serial.println("Sent response ");  
+      //printf("%.6s\n", response);
+      //Serial.println("\n\r"); 
    }else{
-    printf("No data \n\r");
+    //printf("No data \n\r");
    }
    delay(1000);
  }
 
 
 /****************** Change Roles via Serial Commands ***************************/
-
+/*
   if ( Serial.available() )
   {
     char c = toupper(Serial.read());
@@ -135,5 +132,5 @@ void loop(void){
        radio.openWritingPipe(addresses[0]);
        radio.openReadingPipe(1,addresses[1]);
     }
-  }
+  }*/
 }

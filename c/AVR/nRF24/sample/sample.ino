@@ -3,21 +3,18 @@
  *
  * This code is a sketch for an arduino this code is intended to test connectivity with python/nRF24/send.py and python/nRF24/response.py
  */
-
-
-#include <SPI.h>
 #include "nRF24L01.h"
 #include "RF24.h"
 #include "printf.h"
-
 // Hardware configuration: Set up nRF24L01 radio on SPI bus plus pins 7 & 8 
-RF24 radio(7,8);
+RF24 radio(9,10);
 int rec[10] = {};
 uint64_t addresses[] = { 0xe7e7e7e7e7LL, 0xc2c2c2c2c2LL };
 
 // Set up roles to simplify testing 
-boolean role;                                    // The main role variable, holds the current role identifier
+
 boolean role_ping_out = 1, role_pong_back = 0;   // The two different roles.
+boolean role = role_ping_out;                                    // The main role variable, holds the current role identifier
 
 void setup() {
 
@@ -32,13 +29,13 @@ void setup() {
   radio.setPayloadSize(32);
   radio.setChannel(0x76);
   radio.enableAckPayload();
-  radio.setPALevel(RF24_PA_LOW);
+  radio.setPALevel(RF24_PA_MIN);
   radio.enableDynamicPayloads();
   radio.setRetries(25,25);                // Max delay between retries & number of retries
 
   //set channels to recieve
-  radio.openWritingPipe(addresses[0]);
-  radio.openReadingPipe(1,addresses[1]);
+  radio.openWritingPipe(addresses[1]);
+  radio.openReadingPipe(1,addresses[0]);
   
   radio.startListening();                 // Start listening
   radio.printDetails();                   // Dump the configuration of the rf unit for debugging
@@ -102,7 +99,7 @@ void loop(void){
       // First, stop listening so we can talk   
       radio.writeAckPayload(1, &response, sizeof(response));
 
-      //radio.startListening();                                       // Now, resume listening so we catch the next packets.     
+      radio.startListening();                                       // Now, resume listening so we catch the next packets.     
       Serial.println("Sent response ");  
       printf("%.6s\n", response);
       Serial.println("\n\r"); 
